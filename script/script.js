@@ -9,20 +9,21 @@ id("card-container").addEventListener("click", function (e) {
     const main = e.target;
     const title = main.parentNode.parentNode.childNodes[3].innerText;
     const number = main.parentNode.parentNode.childNodes[7].innerText;
-    const subTitle = main.parentNode.parentNode.childNodes[5].innerText;
-    
-    const time = new Date()
-    let hour = time.getHours()
+    const subTitle =
+      main.parentNode.parentNode.childNodes[5].innerText.toLowerCase();
+
+    const time = new Date();
+    let hour = time.getHours();
     hour = hour % 12;
     hour = hour ? hour : 12;
-    const min =time.getMinutes()
-    const ap = hour >= 12 ? "AM" : "PM"
-     
+    let min = time.getMinutes();
+    min = min < 10 ? "0" + min : min;
+    const second = time.getSeconds();
 
     const coin = Number(id("coin-btn").innerText);
 
     if (coin === 0) {
-      alert("❌Sorry, you don't have sufficient coin.");
+      alert("❌Not enough coins! Minimum 20 required to call.");
       return;
     }
     alert("Calling " + subTitle + " " + "number " + number + "...");
@@ -39,25 +40,35 @@ id("card-container").addEventListener("click", function (e) {
                         <p>${number}</p>
                     </div>
                     <div>
-                        <p class="font-semibold">${hour}:${min} ${ap}</p>
+                        <p class="font-semibold">${hour}:${min}:${second}</p>
                     </div>
                 </div>`;
     container.append(newDiv);
   }
 });
 //  clear button //
-id("clear-btn").addEventListener("click",function(
-){
-    const container =id("history-container")
-    container.innerHTML =" "
-})
+id("clear-btn").addEventListener("click", function () {
+  const container = id("history-container");
+  container.innerHTML = " ";
+});
 // life-button-❤//
-id("card-container").addEventListener("click",function(e){
-    if(e.target.className.includes("life-btn")){
-       let lifeCount = id("life-count").innerText;
-       const add = Number(lifeCount)+1
-       id("life-count").innerText=add
-    }
-   
-})
-
+id("card-container").addEventListener("click", function (e) {
+  if (e.target.className.includes("life-btn")) {
+    const lifeCount = id("life-count").innerText;
+    const add = Number(lifeCount) + 1;
+    id("life-count").innerText = add;
+  }
+});
+//copy btn//
+id("card-container").addEventListener("click", function (e) {
+  if (e.target.className.includes("copy-btn")) {
+    const main = e.target;
+    const totalCopy = id("total-copy").innerText;
+    const number = main.parentNode.parentNode.childNodes[7].innerText;
+    navigator.clipboard.writeText(number).then(() => {
+      alert("Number copied: " + number);
+      const addCopy = Number(totalCopy) + 1;
+      id("total-copy").innerText = addCopy;
+    });
+  }
+});
