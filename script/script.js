@@ -2,19 +2,22 @@ function id(a) {
   const id = document.getElementById(a);
   return id;
 }
-// life-function
-id("life-btn").addEventListener("click", function () {
-  const life = id("life-count").innerText;
-  const add = Number(life) + 1;
-  id("life-count").innerText = add;
-});
 
+//   call-button   //
 id("card-container").addEventListener("click", function (e) {
   if (e.target.className.includes("call-btn")) {
     const main = e.target;
     const title = main.parentNode.parentNode.childNodes[3].innerText;
     const number = main.parentNode.parentNode.childNodes[7].innerText;
     const subTitle = main.parentNode.parentNode.childNodes[5].innerText;
+    
+    const time = new Date()
+    let hour = time.getHours()
+    hour = hour % 12;
+    hour = hour ? hour : 12;
+    const min =time.getMinutes()
+    const ap = hour >= 12 ? "AM" : "PM"
+     
 
     const coin = Number(id("coin-btn").innerText);
 
@@ -36,9 +39,25 @@ id("card-container").addEventListener("click", function (e) {
                         <p>${number}</p>
                     </div>
                     <div>
-                        <p class="font-semibold">10:30 AM</p>
+                        <p class="font-semibold">${hour}:${min} ${ap}</p>
                     </div>
                 </div>`;
     container.append(newDiv);
   }
 });
+//  clear button //
+id("clear-btn").addEventListener("click",function(
+){
+    const container =id("history-container")
+    container.innerHTML =" "
+})
+// life-button-❤//
+id("card-container").addEventListener("click",function(e){
+    if(e.target.className.includes("life-btn")){
+       let lifeCount = id("life-count").innerText;
+       const add = Number(lifeCount)+1
+       id("life-count").innerText=add
+    }
+   
+})
+
