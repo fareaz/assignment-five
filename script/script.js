@@ -22,7 +22,7 @@ id("card-container").addEventListener("click", function (e) {
 
     const coin = Number(id("coin-btn").innerText);
 
-    if (coin === 0) {
+    if (coin <= 19) {
       alert("❌Not enough coins! Minimum 20 required to call.");
       return;
     }
